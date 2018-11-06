@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.eports = {
+module.exports = {
     entry: './src/index.js',
     output: {
         filename: 'bundle.js',
