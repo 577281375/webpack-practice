@@ -34,6 +34,14 @@
          使用 d3 等工具来实现数据可视化，完成预加载数据
          resolve.alias 别名管理全局资源
 
+## 管理输出
+    输出bundle
+        根据入口起点名称动态生成 bundle 名称
+    设定 HtmlWebpackPlugin
+        熟悉 HtmlWebpackPlugin 仓库 你还可以看一下 html-webpack-template，除了默认模板之外，还提供了一些额外的功能。
+    清理 /dist 文件夹
+
+
 
 
 
