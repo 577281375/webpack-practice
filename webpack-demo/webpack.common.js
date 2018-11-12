@@ -1,30 +1,25 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const Webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/index.js',
-    },
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',//修改配置文件，告诉开发服务器(dev server)，在哪里查找文件
-        hot:true,
+        app: './src/index.js'
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title:'Output Management'
+            title: 'Production',
         }),
-        new Webpack.NamedModulesPlugin(),
-        new Webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        })
     ],
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    // mode: "production",
     module: {
         rules: [
             {
@@ -34,6 +29,11 @@ module.exports = {
                     'css-loader'
                 ]
             },
-        ]
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            }
+        ],
     }
 };
