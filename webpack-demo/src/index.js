@@ -1,33 +1,20 @@
-import _ from "lodash";
 import PrintMe from "./print";
 import "./styles.css";
-import { cube } from "./math";
+import "./common.css";
 if (process.env.NODE_ENV !== 'production') {
     console.log('Look like we are in development mode!');
 }
 
+function getComponent() {
+    return import(/* webpackChunkName: "lodash" */ 'lodash').then(_ => {
+        var element = document.createElement("div");
+        element.innerHTML = _.join(['hello', 'webpack'], '~');
+        return element;
+    }).catch(error=>'An error occurred while loading the component!')
 
-function component() {
-    var element = document.createElement("div");
-    var btn = document.createElement('button');
-    // element.innerHTML = _.join(['hello', 'webpack'], '~');
-    element.innerHTML = [
-        'hello webpack',
-        '5 cube is equal to' + cube(5)
-    ].join('\n\n')
-    btn.innerHTML = "click me and check the console!";
-    btn.onclick = PrintMe;
-    element.appendChild(btn);
-    return element;
 }
 
-let element = component();
-document.body.appendChild(element);
-if (module.hot) {
-    module.hot.accept("./print.js", function () {
-        console.log('Accept the updated PrintMe module!');
-        document.body.removeChild(element);
-        element = component();
-        document.body.appendChild(element);
-    })
-}
+getComponent().then(component => {
+    console.log(component)
+    document.body.appendChild(component)
+})

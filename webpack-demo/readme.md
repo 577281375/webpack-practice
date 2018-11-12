@@ -110,6 +110,8 @@
         避免在生产中使用 inline-*** 和 eval-***，因为它们可以增加 bundle 大小，并降低整体性能。
     指定环境
         当使用 process.env.NODE_ENV === 'production' 时，一些 library 可能针对具体用户的环境进行代码优化，从而删除或添加一些重要代码。我们可以使用 webpack 内置的 DefinePlugin 为所有的依赖定义这个变量
+    Split CSS
+        ExtractTextPlugin 将 CSS 分离成单独的文件
 
     作业
         (merge)的高级功能 了解
@@ -142,5 +144,43 @@
     2.报错就百度 ，找不到就 google  一定可以解决问题
 
 
-##
+##  代码分离 ——————影响项目加载时间
+    按需加载，并行加载
+    代码分离 用于获取更小的bundle,控制资源加载优先级
+    三种代码分离的方法：
+        · 入口起点：使用entry 配置手动的分离代码
+        · 防止重复：使用 CommonsChunkPlugin 去重和分离chunk
+        · 动态导入：通过模块的内联函数调用来分离代码
+    入口起点(entry points)
+    防止重复(prevent duplication)
+        CommonsChunkPlugin 插件可以将公共的依赖模块提取到已有的入口 chunk 中，或者提取到一个新生成的 chunk
+
+## question
+    报错：
+        webpack.optimize.CommonsChunkPlugin has been removed, please use config.optimization.splitChunks instead.
+    answer：
+        搜索官方文档 config.optimization.splitChunks 用这个新的配置就好了 而且用了这个配置以后 加载速度明显变快
+
+
+    报错 import().then 模块不可以用
+    return import(/* webpackChunkName: "lodash" */ 'lodash').then(_ => {
+    answer:
+        webpack 的 Dynamic Imports 实现主要是利用 ECMAScript的 import() 动态加载特性，而 import() 目前只是一个草案，如果需要用此方法，需要引入对应的转换器，如 babel-plugin-syntax-dynamic-import。
+
+        下载的时候  警告warn
+        @babel/plugin-syntax-dynamic-import@7.0.0 requires a peer of @babel/core@^7.0.0-0 but none is installed. You must install peer dependencies yourself
+        所以
+        npm install --save-dev @babel/core@^7.0.0-0 后面我把它卸载了 发现还是可以用
+
+        在引入 babel-plugin-syntax-dynamic-import 后有报错
+        Requires Babel "^7.0.0-0", but was loaded with "6.26.3". If you are sure you have a compatible version of @babel/core, it is likely that something in your build process is loading the wrong version. Inspect the stack trace of this error to look for the first entry that doesn't mention "@babel/core" or "babel-core" to see what is calling Babel.
+        大概意思是  需要因为 @babel/core  babel-core 为7的版本
+        npm install babel-core@7.0.0-bridge.0 --save-dev
+
+
+
+
+
+
+
 

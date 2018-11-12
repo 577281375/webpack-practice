@@ -1,23 +1,26 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
-        app: './src/index.js'
+        app: './src/index.js',
+        // another: './src/another-modules.js'
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'Production',
+            title: 'Split Code',
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
-        })
+        }),
     ],
     output: {
         filename: '[name].bundle.js',
+        chunkFilename:'[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -25,7 +28,12 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    'style-loader',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../'
+                        }
+                    },
                     'css-loader'
                 ]
             },
@@ -35,5 +43,16 @@ module.exports = {
                 loader: "babel-loader"
             }
         ],
-    }
+    },
+    // optimization: {
+    //     splitChunks: {
+    //         cacheGroups: {
+    //             commons: {
+    //                 name: 'commons',
+    //                 chunks: 'initial',
+    //                 minChunks: 2
+    //             }
+    //         }
+    //     }
+    // }
 };
