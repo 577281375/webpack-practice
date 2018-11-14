@@ -6,6 +6,9 @@ const Webpack = require('webpack');
 module.exports = {
     entry: {
         app: './src/index.js',
+        // vendor: [
+        //     '@babel/polyfill'
+        // ]
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -18,7 +21,7 @@ module.exports = {
             title:'Output Management'
         }),
         new Webpack.NamedModulesPlugin(),
-        new Webpack.HotModuleReplacementPlugin(),
+        new Webpack.HotModuleReplacementPlugin()
     ],
     output: {
         filename: '[name].bundle.js',

@@ -1,3 +1,6 @@
-export default function printMe() {
-    console.log('i get called from print.js');
+console.log('The print.js module has loaded!See the network tab in dev toolds...')
+import _ from "lodash";
+export default function btn(){
+    console.log('Button Click Here!');
+    console.log(_.join(['Button', 'Click','Here!'],'~'))
 }

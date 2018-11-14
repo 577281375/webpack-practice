@@ -118,7 +118,7 @@
         bebel 的模块认知 https://www.jb51.net/article/135225.htm
         webpack的其他指令
 
-## 此处碰到的问题
+## question
     一直build报错 ————————百度搜索还有google搜索都说是因为没有安装babel
 
     ERROR in app.bundle.js from UglifyJs
@@ -154,6 +154,8 @@
     入口起点(entry points)
     防止重复(prevent duplication)
         CommonsChunkPlugin 插件可以将公共的依赖模块提取到已有的入口 chunk 中，或者提取到一个新生成的 chunk
+    动态导入   import导入  用async  + import导入
+    检查 bundle
 
 ## question
     报错：
@@ -177,8 +179,29 @@
         大概意思是  需要因为 @babel/core  babel-core 为7的版本
         npm install babel-core@7.0.0-bridge.0 --save-dev
 
+    用async 时候报错 大概是因为不支持 async
+        到babel里搜索 async  看demo 找到对应的插件  @babel/plugin-transform-async-to-generator  安装
+        还是报错 regeneratorRuntime is not defined  放弃抵抗 继续搜索google
+        安装@babel/polyfill
+        官方最简单的 引入办法就是 在入口文件import
+        遇到新的问题  我的entry是一对象的形式写的 demo给我的是对象 要去看entry的api了
 
 
+## 懒加载
+    懒加载就是 异步bundle加载 动态导入
+    特性 只有在第一次使用的时候 才会加载次js 首次加载 加载过后 都不会再次加载  可以看network
+
+    作业：
+        我觉得看官方api可能更全面
+        react实现懒加载：https://reacttraining.com/react-router/web/guides/code-splitting
+        Vue： https://alexjover.com/blog/lazy-load-in-vue-using-webpack-s-code-splitting/
+
+
+## 缓存
+    重点在于通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件。
+
+    输出文件的文件名
+    提取模板
 
 
 
