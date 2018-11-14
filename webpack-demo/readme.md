@@ -197,11 +197,42 @@
         Vue： https://alexjover.com/blog/lazy-load-in-vue-using-webpack-s-code-splitting/
 
 
-## 缓存
+## 缓存  -----写到这里有点蒙蔽了  明白应该每一章都备份一下  不要怕麻烦的  现在遇到的问题是 我的配置和之前的配置有冲突  可以至此你async 不可以支持 块级作用于  问题是因为 各自的版本我配置的不对  想重新写了 但是现在先不管  继续写
     重点在于通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件。
 
     输出文件的文件名
-    提取模板
+    提取模板 Extracting Boilerplate
+        属于 优化模版 optimize
+        我搜了一下 在 configuration 里的   optimization 模块里 这个是优化模块
+        因为 CommonsChunkPlugin 在webpack4中被去掉了  Cache Groups缓存组
+        common 打包第三方类库
+            minChunks：2
+            priority:2
+                引入超过两次的代码 就属于公共代码  然后吧他们打包到 common.js里 进行验证 现在
+        vendor 打包重复出现的代码
+            将第三方库(library)（例如 lodash 或 react）提取到单独的 vendor chunk 文件中，是比较推荐的做法，这是因为，它们很少像本地的源代码那样频繁修改。因此通过实现以上步骤，利用客户端的长效缓存机制，可以通过命中缓存来消除请求，并减少向服务器获取资源，同时还能保证客户端代码和服务器端代码版本一致
+        splitChunks 模块分割
+        runtimeChunk 运行名称  用来提取 entry chunk 中的 runtime部分函数，形成一个单独的文件，这部分文件不经常变换，方便做缓存
+
+        我发现我们公司自己的项目没有用脚手架  还不错  哈哈  我的终极目标就是自己搭建一个小型的我们公司的项目  加油 再接再厉
+
+    模块标识符(Module Identifiers)
+        保持hash id不变化 这样 如果vendor 就会保持 文件名字不变 就不用被浏览器再次加载  这样做到缓存优化
+        第一个插件是 NamedModulesPlugin，将使用模块的路径，而不是数字标识符。虽然此插件有助于在开发过程中输出结果的可读性，然而执行时间会长一些。第二个选择是使用 HashedModuleIdsPlugin，推荐用于生产环境构建：
+
+
+    这一章我用了很久的时间去理解 这一章 就是文件的输出优化
+        文件输出名称的优化
+        进行代码分割 提取引入的公共代码common 提取第三方类库代码vendor
+        提取后的这些不会改变的代码 在保存的时候  对他们进行缓存  就要保存他们的 hashid  这样webpack就会对代码进行比对 如果代码不变 就不会改变hashid我是这么理解的
+        后期在进行自己的项目搭建的时候  应该会有更深的理解 这个只是初步理解
+
+    作业：
+        可以考虑看一下 splitChunks 的源码 这样可以更深的了解配置项的含义
+        这个链接讲的含详细    如何抽取缓存  抽取公共配置   http://imweb.io/topic/5b66dd601402769b60847149
+        https://www.cnblogs.com/carrotWu/p/8665720.html
+
+
 
 
 

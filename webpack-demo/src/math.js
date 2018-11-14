@@ -5,3 +5,5 @@ export function squre(x) {
 export function cube(x) {
     return x * x * x
 }
+
+import "./common.js";

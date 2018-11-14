@@ -9,7 +9,6 @@ module.exports = {
         main: './src/index.js',
         vendor: [
             'lodash',
-            '@babel/polyfill'
         ]
     },
     plugins: [
@@ -21,10 +20,11 @@ module.exports = {
             filename: "[name].css",
             chunkFilename: "[id].css"
         }),
+        new webpack.HashedModuleIdsPlugin(),
     ],
     output: {
         filename: '[name].[chunkhash].js',
-        chunkFilename:'[name].bundle.js',
+        chunkFilename:'[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -51,17 +51,23 @@ module.exports = {
     optimization: {
         splitChunks: {
             cacheGroups: {
+                //将第三方库(library) 提取到单独的 vendor chunk 文件中
                 vendor: {
                     name: 'vendor',
                     test:/[\\/]node_modules[\\/]/,
                     chunks: 'all',
                 },
+                //公共模块
                 commons: {
-                    name: 'manifest',
+                    name: 'commons',
                     chunks: 'initial',
-                    minChunks: 2
+                    minChunks: 2,
+                    priority:2
                 },
             }
+        },
+        runtimeChunk: {
+            name: "manifest"
         }
     }
 };
