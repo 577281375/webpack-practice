@@ -31,7 +31,8 @@ import _ from 'lodash';
 import "./styles.css";
 import Print from "./Print";
 import { cube} from "./math";
-
+import { file } from './globals';
+console.log(file,"file")
 if (process.env.NODE_ENV !== 'production') {
     console.log('Look like we are in development mode!');
 }
