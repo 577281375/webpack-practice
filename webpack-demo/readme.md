@@ -209,7 +209,7 @@
     提取模板 Extracting Boilerplate
         属于 优化模版 optimize
         我搜了一下 在 configuration 里的   optimization 模块里 这个是优化模块
-        因为 CommonsChunkPlugin 在webpack4中被去掉了  Cache Groups缓存组
+        因为 CommonsChunkPlugin 在webpack4中被去掉了  Cache Groups缓存组 代码里面好像写反了 命名 将就看吧
         common 打包第三方类库
             minChunks：2
             priority:2

@@ -1,0 +1,19 @@
+{
+  "name": "webpack-reactdemo",
+  "version": "0.1.0",
+  "description": "react-demo for webpack4",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/577281375/webpack-practice.git"
+  },
+  "author": "songxue <577281375@qq.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/577281375/webpack-practice/issues"
+  },
+  "homepage": "https://github.com/577281375/webpack-practice#readme"
+}
