@@ -4,15 +4,16 @@ const webpack = require('webpack');
 const loginEnv = process.env.login_env;
 console.log(loginEnv,"loginEnv")
 module.exports =
-    // (env) => {
-    // console.log(env.SERVICE_URL, 'env.SERVICE_URL');
+    (env) => {
+        console.log(env, 'env.SERVICE_URL');
+
+    console.log(env.SERVICE_URL, 'env.SERVICE_URL');
     // console.log(env.production, 'env.production');
     // console.log(process.env.login_env,"login_env");
     // const SERVICE_URL = env.SERVICE_URL;//api环境
     // const PRODUCTION = process.env.NODE_ENV == 'development' ?
     //     JSON.stringify(true) : JSON.stringify(false);//环境变量
-    // return
-    {
+    return{
         entry: {
             index: './src/index.js',
             polyfills: './src/polyfills.js'
@@ -51,5 +52,5 @@ module.exports =
             //     // login_env: JSON.stringify( process.env.login_env)
             // })
         ],
-    // }
+    }
 }

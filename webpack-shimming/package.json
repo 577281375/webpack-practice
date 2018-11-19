@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config ./webpack.config.js --progress",
-    "start": "login_env='staging-' webpack-dev-server --progress --colors --inline --config ./webpack.config.js --progress"
+    "start": "login_env='staging-' webpack-dev-server --progress --env.SERVICE_URL='SERVICE_URL' --colors --inline --config ./webpack.config.js --progress"
   },
   "keywords": [],
   "author": "",
