@@ -1,81 +1,58 @@
 const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const WebpackBar = require('webpackbar');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const webpack = require('webpack');
-
+const pluginList = require('./plugins.js');
 
 module.exports = env => {
     const ENVIROMENT = env.ENVIROMENT === 'production' ? true : false;//开发环境
     const SERVICEURL = env.SERVICEURL;//开发service 链接
     const VERSION = '5fa3b9';//开发版本
-    const title = 'SongxueWebpackReactDemo';
+    const TITLE = 'SongxueWebpackReactDemo';
     return {
         entry: {
             index: './src/index.js',
         },
         output: {
             filename: '[name].bundle.js',
-            chunkFilename:"[name].bundle.js",
-            path: path.resolve(__dirname, 'dist')
+            chunkFilename: "[name].bundle.js",
+            path: path.resolve(__dirname, '../dist')
         },
-        plugins: [
-            new CleanWebpackPlugin(['dist']),
-            new htmlWebpackPlugin({
-                title: title,
-                filename: 'index.html',
-                minify: {
-                    collapseWhitespace: true,
-                },
-                hash: true,
-            }),
-            // new BundleAnalyzerPlugin({
-            //     analyzerMode:'server'
-            // }),
-            new WebpackBar(
-                {
-                    name: ENVIROMENT ? 'production' : 'development',
-                    color: ENVIROMENT ? '#f2a900' : '#00953a'
-                }
-            ),
-            new webpack.DefinePlugin({
-                SERVICEURL: JSON.stringify(SERVICEURL),
-                ENVIROMENT: JSON.stringify(ENVIROMENT),
-                VERSION: JSON.stringify(VERSION),
-            })
-        ],
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, '../src/'),
+                GlobalUtils: path.resolve(__dirname, '../src/untils/')
+            }
+        },
         module: {
             rules: [
                 {
-                    test: /\.css$/,
+                    test: /\.(le|c)ss$/,
                     use: [
-                        'style-loader',
-                        'css-loader'
+                        ENVIROMENT ? MiniCssExtractPlugin.loader : 'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                alias: {
+                                    GlobalUtils: path.resolve(__dirname, '../assets/css/')
+                                },
+                                importLoaders: 1,
+                                modules: true,
+                                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                                camelCase: true
+                            }
+                        },
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                paths: [
+                                    path.resolve(__dirname, "node_modules")
+                                ]
+                            }
+                        }
                     ]
-                },
-                // {
-                //     test: /\.less$/,
-                //     use: [{
-                //         loader: "style-loader" // creates style nodes from JS strings
-                //     }, {
-                //         loader: "css-loader",// translates CSS into CommonJS
-                //         options: {
-                //             sourceMap: true
-                //         }
-                //     }, {
-                //         loader: "less-loader",
-                //             options: {
-                //             sourceMap: true,
-                //             strictMath: true,
-                //             noIeCompat: true,
-                //             paths: [
-                //                 path.resolve(__dirname, "node_modules")
-                //             ]
-                //         } // compiles Less to CSS
-                //     }]
-                // }
+                }
             ]
-        }
+        },
+        plugins: pluginList(ENVIROMENT, SERVICEURL, VERSION, TITLE)
     }
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --env.ENVIROMENT='development' --env.SERVICEURL='SERVICEURL' --colors --inline --config webpack/webpack.dev.js --progress",
-    "build": "webpack  --env.prod='production'  --config webpack/webpack.pro.js --progress"
+    "build": "webpack  --env.ENVIROMENT='production'  --config webpack/webpack.pro.js --progress"
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,12 @@
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.1",
-    "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.11",
+    "mini-css-extract-plugin": "^0.4.4",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.25.1",

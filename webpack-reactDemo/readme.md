@@ -34,7 +34,19 @@
     分配好项目目录结构以后  就要想着 怎么整合资源输出问题
 
 
-    配置 less
+    配置css 查看css模块 配置是否成功
+    extract-text-webpack-plugin 单独打包css 报错  Tapable.plugin is deprecated. Use new API on `.hooks` instead
+    npm i -D extract-text-webpack-plugin@next
+
+    postcss-loader 添加浏览器前缀
+    mini-css-extract-plugin 代替  extract-text-webpack-plugin
+    https://github.com/webpack-contrib/mini-css-extract-plugin
+
+    CleanWebpackPlugin process.cwd() __dirname 区别
+    css module 配置
+    less 模块配置
+    验证打包 css模块加载是否重复
+
     环境配置好以后 再配置
     代码分离
     打包构建速度 --懒加载
