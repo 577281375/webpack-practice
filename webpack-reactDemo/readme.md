@@ -98,6 +98,16 @@
     npm i @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx -D
 
 
+    question
+
+    搭环境    首先 你要确定 你要做什么  哪些功能需要用到什么  这么功能模块 怎么调用 之间有什么依赖关联  怎么写比较好维护、扩展。
+    别什么 都用最新的 或者 看到啥感兴趣就用  搞那么一大堆箩筐 乱七八糟的 最后把自己搞懵逼了
+
+    这个时候 应该去做webpack的优化 然后再去实验 优化是否有效
+    https://www.jb51.net/article/142761.htm 优化的方向
+    看了一下 太麻烦了 还要去验证  溜了溜了 回去看书 不想写了
+
+    再下一步去搭建react的环境
     我要在 react里写
     修饰器
     async
@@ -105,6 +115,7 @@
     import 懒加载
     react-router
     react-redux
+    ts配置
 
 
     这个到了以后 就要配置 es6  es7  的语法配置 plugin
@@ -113,6 +124,7 @@
     踩坑  url-loader 内置file-loader 所以用 url-loader 就不用 file-loader
 
 
+    这个时候就是一个思考的过程了
 
 ## 项目目录
     ```

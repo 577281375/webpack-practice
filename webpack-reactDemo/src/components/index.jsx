@@ -8,23 +8,3 @@ class Demo extends Component {
     }
 }
 export default Demo;
-
-
-// {
-//     "env": {
-//         "production": {
-//             "plugins": [
-//             ]
-//         }
-//     },
-//     {
-//         "presets": [
-//         "react",
-//         "@babel/preset-env",
-//         "@babel/preset-react"
-//     ]
-//     },
-//     "ignore": [
-//         "node_module"
-//     ]
-// }

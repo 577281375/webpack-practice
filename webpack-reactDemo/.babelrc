@@ -12,7 +12,11 @@
     ],
     "plugins": [
         "@babel/plugin-syntax-jsx",
-        "@babel/plugin-transform-react-jsx"
+        "@babel/plugin-transform-react-jsx",
+        "@babel/plugin-transform-react-display-name",
+        "@babel/plugin-transform-react-inline-elements",
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-transform-async-to-generator"
     ],
     "env": {
         "development": {
@@ -25,7 +29,9 @@
                 ]
             ],
             "plugins": [
-                "@babel/plugin-transform-runtime"
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-transform-react-jsx-self",
+                "@babel/plugin-transform-react-jsx-source"
             ]
         },
         "production":{

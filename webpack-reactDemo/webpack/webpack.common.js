@@ -2,10 +2,9 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const pluginList = require('./plugins.js');
-console.log(process.env.NODE_ENV,"process.env.NODE_ENV")
 
 module.exports = env => {
-    const ENVIROMENT = env.ENVIROMENT === 'production' ? true : false;//开发环境
+    const ENVIROMENT = process.env.NODE_ENV === 'production' ? true : false;//开发环境
     const SERVICEURL = env.SERVICEURL;//开发service 链接
     const VERSION = '5fa3b9';//开发版本
     const TITLE = 'SongxueWebpackReactDemo';
@@ -32,11 +31,6 @@ module.exports = env => {
                     exclude: /node_modules/,
                     loader: "babel-loader",
                 },
-                // {
-                //     test: /\.jsx$/,
-                //     exclude: /node_modules/,
-                //     loader: "babel-loader",
-                // },
                 {
                     test: /\.(le|c)ss$/i,
                     use: [
@@ -78,6 +72,28 @@ module.exports = env => {
                 },
             ]
         },
-        plugins: pluginList(ENVIROMENT, SERVICEURL, VERSION, TITLE)
+        plugins: pluginList(ENVIROMENT, SERVICEURL, VERSION, TITLE),
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    //将第三方库(library) 提取到单独的 vendor chunk 文件中
+                    vendor: {
+                        name: 'vendor',
+                        test: /[\\/]node_modules[\\/]/,
+                        chunks: 'all',
+                    },
+                    //公共模块
+                    commons: {
+                        name: 'commons',
+                        chunks: 'initial',
+                        minChunks: 2,
+                        priority: 2
+                    },
+                }
+            },
+            runtimeChunk: {
+                name: "manifest"
+            }
+        }
     }
 }
