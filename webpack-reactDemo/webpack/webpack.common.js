@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const pluginList = require('./plugins.js');
+console.log(process.env.NODE_ENV,"process.env.NODE_ENV")
 
 module.exports = env => {
     const ENVIROMENT = env.ENVIROMENT === 'production' ? true : false;//开发环境
@@ -20,13 +21,24 @@ module.exports = env => {
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, '../src/'),
-                GlobalUtils: path.resolve(__dirname, '../src/untils/')
+                GlobalUtils: path.resolve(__dirname, '../src/untils/'),
+                components: path.resolve(__dirname, '../src/components/'),
             }
         },
         module: {
             rules: [
                 {
-                    test: /\.(le|c)ss$/,
+                    test: /\.(js|jsx)$/,
+                    exclude: /node_modules/,
+                    loader: "babel-loader",
+                },
+                // {
+                //     test: /\.jsx$/,
+                //     exclude: /node_modules/,
+                //     loader: "babel-loader",
+                // },
+                {
+                    test: /\.(le|c)ss$/i,
                     use: [
                         ENVIROMENT ? MiniCssExtractPlugin.loader : 'style-loader',
                         {
@@ -45,12 +57,25 @@ module.exports = env => {
                             loader: 'less-loader',
                             options: {
                                 paths: [
-                                    path.resolve(__dirname, "node_modules")
+                                    path.resolve(__dirname, "../node_modules")
                                 ]
                             }
                         }
                     ]
-                }
+                },
+                {
+                    test: /\.(png|svg|jpg|gif)$/i,
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 8192,
+                                name: ENVIROMENT ? '[hash].[ext]' : '[path][name].[ext]?[hash]',
+                                outputPath: 'images/',
+                            }
+                        }
+                    ]
+                },
             ]
         },
         plugins: pluginList(ENVIROMENT, SERVICEURL, VERSION, TITLE)

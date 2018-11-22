@@ -1,0 +1,37 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "entry"
+            }
+        ],
+        [
+            "@babel/preset-react"
+        ]
+    ],
+    "plugins": [
+        "@babel/plugin-syntax-jsx",
+        "@babel/plugin-transform-react-jsx"
+    ],
+    "env": {
+        "development": {
+            "presets": [
+                [
+                    "@babel/preset-react",
+                    {
+                        "development": true
+                    }
+                ]
+            ],
+            "plugins": [
+                "@babel/plugin-transform-runtime"
+            ]
+        },
+        "production":{
+            "plugins": [
+                "@babel/runtime"
+            ]
+        }
+    }
+}

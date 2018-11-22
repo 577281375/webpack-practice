@@ -33,7 +33,8 @@
 
     分配好项目目录结构以后  就要想着 怎么整合资源输出问题
 
-
+    配置静态资源文件的加载
+    css
     配置css 查看css模块 配置是否成功
     extract-text-webpack-plugin 单独打包css 报错  Tapable.plugin is deprecated. Use new API on `.hooks` instead
     npm i -D extract-text-webpack-plugin@next
@@ -46,12 +47,73 @@
     css module 配置
     less 模块配置
     验证打包 css模块加载是否重复
+    postcss 到时候再弄这个额兼容吧
+
+    jsx
+
+    file file-loader url-loader
+    url-loader可以将图片转为base64字符串，能更快的加载图片，一旦图片过大，
+    就需要使用file-loader的加载本地图片，故url-loader可以设置图片超过多少字节时，使用file-loader加载图片。
+        base64编码的图片不能像正常的图片可以进行缓存
+        对于比较小的图片，使用base64编码，可以减少一次图片的网络请求；那么对于比较大的图片,使用base64就不适合了，编码会和html混在一起，一方面可读性差，另一方面加大了html页面的大小，反而加大了下载页面的大小
 
     环境配置好以后 再配置
     代码分离
     打包构建速度 --懒加载
 
     涉及到 资源分配的问题 现在要设计一下 文件目录
+
+    现在遇到的问题是 我应该继续先写代码分割 写优化 还是先吧项目依赖下载 搭建好 再开始进行优化分割的操作
+    webpack官方文档提供的代码分割的方式
+        1.import()
+        2.打包第三方库vendor也可以优化加载速度
+        3.把公共代码打包分割也可以
+    react 提供的 coding split
+        import()
+        React Loadable
+        基于路由的代码分隔
+
+
+    question
+        还有 webpack 官方提供的其他的优化方式 后续尝试
+        include  exclude
+        还有  webpack 链式操作的plugin webpack.cache
+
+    react项目搭建
+        npm install --save react - 安装React.
+        npm install --save react-dom 安装React Dom,这个包是用来处理virtual DOM。这里提一下用React Native的话，这里就是安装react-native
+
+    babel项目依赖
+        https://babeljs.io/docs/en/#jsx-and-react
+
+
+    牵扯到的问题真的多  真不知道babel怎噩梦配置 然后认真看api之后明白了 升级babel7  后面加@
+    不然就是以及一下版本
+    然后先重新配置@babel/core  babel-loader 加入配置预设  @babel/preset-env 跑起来
+    之后配置raect  看升级 babel7 的react配置 @babel/preset-react
+
+    npm i @babel/core babel-loader @babel/preset-env @babel/preset-react -D
+    之后在配置jsx语言loader @babel/plugin-syntax-jsx
+    jsx react编译 @babel/plugin-transform-react-jsx
+    npm i @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx -D
+
+
+    我要在 react里写
+    修饰器
+    async
+    yeld
+    import 懒加载
+    react-router
+    react-redux
+
+
+    这个到了以后 就要配置 es6  es7  的语法配置 plugin
+    还有react的 语法配置
+
+    踩坑  url-loader 内置file-loader 所以用 url-loader 就不用 file-loader
+
+
+
 ## 项目目录
     ```
     ├── webpack                    # 项目webpack相关配置
