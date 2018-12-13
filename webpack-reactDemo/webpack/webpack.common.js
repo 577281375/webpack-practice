@@ -2,12 +2,10 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const pluginList = require('./plugins.js');
-
 module.exports = env => {
     const ENVIROMENT = process.env.NODE_ENV === 'production' ? true : false;//开发环境
     const SERVICEURL = env.SERVICEURL;//开发service 链接
     const VERSION = '5fa3b9';//开发版本
-    const TITLE = 'SongxueWebpackReactDemo';
     return {
         entry: {
             index: './src/index.js',
@@ -18,10 +16,13 @@ module.exports = env => {
             path: path.resolve(__dirname, '../dist')
         },
         resolve: {
+            extensions: [".js", ".jsx"],
             alias: {
                 '@': path.resolve(__dirname, '../src/'),
                 GlobalUtils: path.resolve(__dirname, '../src/untils/'),
-                components: path.resolve(__dirname, '../src/components/'),
+                components: path.resolve(__dirname, '../src/components/index.jsx'),
+                containers: path.resolve(__dirname, '../src/containers/index.jsx'),
+                untils: path.resolve(__dirname, '../src/untils/index.jsx'),
             }
         },
         module: {
@@ -32,7 +33,22 @@ module.exports = env => {
                     loader: "babel-loader",
                 },
                 {
-                    test: /\.(le|c)ss$/i,
+                    test: /\.css$/i,
+                    use: [
+                        ENVIROMENT ? MiniCssExtractPlugin.loader : 'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                alias: {
+                                    GlobalUtils: path.resolve(__dirname, '../assets/css/')
+                                },
+                            }
+                        }
+                    ],
+                    exclude: [path.resolve(__dirname, '..', 'node_modules')]
+                },
+                {
+                    test: /\.less$/i,
                     use: [
                         ENVIROMENT ? MiniCssExtractPlugin.loader : 'style-loader',
                         {
@@ -44,18 +60,19 @@ module.exports = env => {
                                 importLoaders: 1,
                                 modules: true,
                                 localIdentName: '[path][name]__[local]--[hash:base64:5]',
-                                camelCase: true
+                                camelCase: true,
                             }
                         },
                         {
                             loader: 'less-loader',
                             options: {
                                 paths: [
-                                    path.resolve(__dirname, "../node_modules")
-                                ]
+                                    path.resolve(__dirname, "../node_modules"),
+                                ],
                             }
                         }
-                    ]
+                    ],
+                    exclude: [path.resolve(__dirname, '..', 'node_modules')]
                 },
                 {
                     test: /\.(png|svg|jpg|gif)$/i,
@@ -70,9 +87,15 @@ module.exports = env => {
                         }
                     ]
                 },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf)$/,
+                    use: [
+                        'file-loader'
+                    ]
+                },
             ]
         },
-        plugins: pluginList(ENVIROMENT, SERVICEURL, VERSION, TITLE),
+        plugins: pluginList(ENVIROMENT, SERVICEURL, VERSION),
         optimization: {
             splitChunks: {
                 cacheGroups: {

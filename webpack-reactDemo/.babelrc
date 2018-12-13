@@ -16,7 +16,19 @@
         "@babel/plugin-transform-react-display-name",
         "@babel/plugin-transform-react-inline-elements",
         "@babel/plugin-syntax-dynamic-import",
-        "@babel/plugin-transform-async-to-generator"
+        "@babel/plugin-transform-async-to-generator",
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "legacy": true
+            }
+        ],
+        [
+            "@babel/plugin-proposal-class-properties",
+            {
+                "loose": true
+            }
+        ]
     ],
     "env": {
         "development": {
@@ -34,7 +46,7 @@
                 "@babel/plugin-transform-react-jsx-source"
             ]
         },
-        "production":{
+        "production": {
             "plugins": [
                 "@babel/runtime"
             ]

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development webpack-dev-server --env.ENVIROMENT='development' --env.SERVICEURL='SERVICEURL' --colors --inline --config webpack/webpack.dev.js --progress",
+    "start": "NODE_ENV=development webpack-dev-server --open --env.ENVIROMENT='development' --env.SERVICEURL='SERVICEURL' --colors --inline --config webpack/webpack.dev.js --progress",
     "build": "NODE_ENV=production webpack  --env.ENVIROMENT='production'  --config webpack/webpack.pro.js --progress"
   },
   "repository": {
@@ -20,6 +20,9 @@
   "homepage": "https://github.com/577281375/webpack-practice#readme",
   "devDependencies": {
     "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.6",
+    "@babel/plugin-syntax-decorators": "^7.1.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-jsx": "^7.0.0",
     "@babel/plugin-transform-async-to-generator": "^7.1.0",
@@ -55,8 +58,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
+    "ant-design": "^1.0.0",
     "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react-dom": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "react-router": "^4.3.1",
+    "react-router-config": "^4.4.0-beta.6",
+    "react-router-dom": "^4.3.1"
   },
   "browserslist": [
     "last 1 version",

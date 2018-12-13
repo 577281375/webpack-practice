@@ -1,13 +1,16 @@
 const webpack = require('webpack');
+const path = require('path');
 const WebpackBar = require('webpackbar');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = (ENVIROMENT, SERVICEURL, VERSION,TITLE) => {
+module.exports = (ENVIROMENT, SERVICEURL, VERSION) => {
     return [
         new htmlWebpackPlugin({
-            title: TITLE,
             filename: 'index.html',
+            inject: true,
+            template:path.resolve(__dirname,'../resources/index.html'),
+            favicon: path.resolve(__dirname, '../resources/images/WechatIMG5.jpg'),
             minify: {
                 collapseWhitespace: true,
             },
@@ -28,5 +31,8 @@ module.exports = (ENVIROMENT, SERVICEURL, VERSION,TITLE) => {
             filename: ENVIROMENT ? '[name].[hash].css' : '[name].css',
             chunkFilename: ENVIROMENT ? '[id].[hash].css' : '[id].css',
         }),
+        // new webpack.DllPlugin({
+
+        // })
     ]
 }
